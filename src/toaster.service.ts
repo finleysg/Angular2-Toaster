@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Toast} from './toast';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/share';
+import {share} from 'rxjs/operators';
 import {Observer} from 'rxjs/Observer';
 import {Subject} from 'rxjs/Subject';
 
@@ -22,10 +22,10 @@ export class ToasterService {
      * Creates an instance of ToasterService.
      */
     constructor() {
-        this.addToast = new Observable<Toast>((observer: any) => this._addToast = observer).share();
-        this.clearToasts = new Observable<IClearWrapper>((observer: any) => this._clearToasts = observer).share();
+        this.addToast = new Observable<Toast>((observer: any) => this._addToast = observer).pipe(share());
+        this.clearToasts = new Observable<IClearWrapper>((observer: any) => this._clearToasts = observer).pipe(share());
         this._removeToastSubject = new Subject<IClearWrapper>()
-        this.removeToast = this._removeToastSubject.share();
+        this.removeToast = this._removeToastSubject.pipe(share());
     }
 
     /**
